@@ -1,5 +1,6 @@
 {
   "name": "vite-project",
+  "homepage": "https://carlosduro.github.io/web_project_around_react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
