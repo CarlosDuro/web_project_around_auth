@@ -1,0 +1,78 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: #000; /* fondo oscuro */
+  color: white;
+  position: relative;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: -30px; /* <-- mueve la línea hacia abajo */
+  left: 30px;
+  right: 30px;
+  height: 1px;
+  background-color: #444;
+  opacity: 0.6;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* espacio entre logo y correo */
+}
+
+.header__logo {
+  position: relative;
+  font-size: 45px;
+  font-weight: none;
+  margin: 0;
+  color: white;
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+}
+
+.header__logo-badge {
+  position: absolute;
+  top: -8px;
+  right: -38px;
+  font-size: 13px;
+  font-weight: normal;
+  color: white;
+  background: transparent !important;
+}
+
+/* Estilo del correo */
+.header__email {
+  color: #ffffff;
+  font-size: 14px;
+  margin: 0;
+  white-space: nowrap;
+  margin-left: auto; /* ⬅️ empuja el email hacia la derecha dentro del header__left */
+}
+
+.header__right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.header__logout,
+.header__link {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.header__logout:hover,
+.header__link:hover {
+  opacity: 0.7;
+}
