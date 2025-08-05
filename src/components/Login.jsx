@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "./Header/Header";
 import auth from "../utils/auth";
 import "../blocks/Login.css";
@@ -25,15 +25,13 @@ function Login({ setLoggedIn, setCurrentUser }) {
           localStorage.setItem("jwt", data.token);
           setLoggedIn(true);
 
-          // ✅ Llamar checkToken para obtener el email real
           return auth.checkToken(data.token);
         }
         return Promise.reject("No se recibió el token");
       })
       .then((userData) => {
-        // ✅ Guardar los datos reales del usuario
         setCurrentUser(userData.data);
-        navigate("/");
+        navigate("/"); // ✅ funciona con HashRouter
       })
       .catch(() => {
         setError("Correo o contraseña incorrectos");
@@ -70,10 +68,10 @@ function Login({ setLoggedIn, setCurrentUser }) {
           </button>
         </form>
         <div className="auth__footer">
-          ¿Aún no eres miembro?
-          <a href="/web_project_around_auth/signup" className="auth__link">
+          ¿Aún no eres miembro?{" "}
+          <Link to="/signup" className="auth__link">
             Regístrate aquí
-          </a>
+          </Link>
         </div>
       </div>
     </>

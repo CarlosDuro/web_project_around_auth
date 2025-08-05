@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  HashRouter,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+
 import Register from "./Register";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
@@ -10,7 +17,8 @@ import api from "../utils/api";
 import auth from "../utils/auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function App() {
+// Componente interno que encapsula la lógica de rutas y estado
+function AppContent() {
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +27,6 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ Validar token cuando App carga
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -27,7 +34,7 @@ function App() {
         .checkToken(token)
         .then((userData) => {
           setLoggedIn(true);
-          setCurrentUser(userData.data); // ✅ <- usamos userData.data
+          setCurrentUser(userData.data);
           if (
             location.pathname === "/login" ||
             location.pathname === "/signup"
@@ -55,17 +62,15 @@ function App() {
     }
   }, [navigate, location.pathname]);
 
-  // ✅ Cargar data si el usuario ya está logueado
   useEffect(() => {
     if (!loggedIn) return;
 
     setIsLoading(true);
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
-        // 🛠️ Fusionamos el email si ya estaba en currentUser
         setCurrentUser((prevUser) => ({
           ...userData,
-          email: prevUser?.email || "", // Mantenemos el email anterior
+          email: prevUser?.email || "",
         }));
         setCards(cardsData);
       })
@@ -176,4 +181,11 @@ function App() {
   );
 }
 
-export default App;
+// ✅ Versión final con HashRouter envolviendo todo
+export default function App() {
+  return (
+    <HashRouter>
+      <AppContent />
+    </HashRouter>
+  );
+}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "./Header/Header";
 import InfoTooltip from "./InfoTooltip";
-import "../blocks/register.css"; // Reutiliza los estilos de Login
+import "../blocks/register.css";
 import "../blocks/InfoTooltip.css";
 
 function Register() {
@@ -27,7 +27,7 @@ function Register() {
   const handleCloseTooltip = () => {
     setIsTooltipOpen(false);
     if (isSuccess) {
-      navigate("/web_project_around_auth/login");
+      navigate("/login"); // ✅ compatible con HashRouter
     }
   };
 
@@ -58,10 +58,10 @@ function Register() {
           </button>
         </form>
         <div className="auth__footer">
-          ¿Ya eres miembro?
-          <a href="/web_project_around_auth/login" className="auth__link">
+          ¿Ya eres miembro?{" "}
+          <Link to="/login" className="auth__link">
             Inicia sesión aquí
-          </a>
+          </Link>
         </div>
       </div>
 
